@@ -1,0 +1,113 @@
+/* style.css — v1.9.6 completo + Segoe UI + link-add dark */
+:root {
+  --bg:#0b0f14; --bg-2:#0e141c; --card:#121821; --line:#1e2733;
+  --text:#e6eef7; --muted:#9fb0c3; --accent:#4a90e2; --accent-2:#1f6fd6;
+  --radius:12px; --shadow:0 10px 30px #0003;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.6 'Segoe UI', sans-serif; /* 👈 Fuente global */
+}
+
+/* Layout */
+.header{padding:24px 0 8px}
+.header-wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.title{margin:0 0 4px}
+.subtitle{margin:0;color:var(--muted);font-size:13px}
+.container{max-width:1100px;margin:0 auto;padding:8px 16px 32px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin:16px 0;box-shadow:var(--shadow)}
+h2{margin:0 0 12px}
+
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:900px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field > span{color:var(--muted);font-size:13px}
+
+input,textarea,select{
+  width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);
+  background:var(--bg-2);color:var(--text);outline:none;
+}
+textarea{resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+
+/* Chips (checkboxes) */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg-2);font-size:13px}
+.chip input{width:auto;height:auto;margin:0}
+
+/* Tags input */
+.tags-input{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--line);background:var(--bg-2);padding:8px 10px;border-radius:10px}
+.tags-input input{border:none;background:transparent;padding:6px 4px;min-width:180px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:#1a2430;border:1px solid var(--line);padding:4px 8px;border-radius:999px}
+.tag .tag-x{background:none;border:none;color:#fff;opacity:.7;cursor:pointer}
+
+/* Action buttons */
+.actions{display:flex;justify-content:flex-end;margin:20px 0}
+.btn-primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border:none;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn{background:#1b2940;color:#d6e6ff;border:1px solid #2a3a56;border-radius:10px;padding:8px 12px;cursor:pointer}
+.btn-secondary{background:#151f2e}
+
+/* NEW: botón agregar (link-add) oscuro */
+.link-add{
+  margin-top:10px;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  padding:8px 14px;
+  color:#cfe1ff;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  display:inline-block;
+  transition:background .2s, filter .2s;
+}
+.link-add:hover{
+  filter:brightness(1.08);
+  background:#1a2431;
+}
+
+/* DnD rows */
+.btn-handle{border:none;background:#203048;color:#cde0ff;border-radius:8px;padding:6px 8px;cursor:grab}
+.btn-del{border:none;background:#e74c3c;color:#fff;border-radius:8px;padding:6px 9px;cursor:pointer}
+.row-drag-over{outline:2px dashed var(--accent);outline-offset:2px}
+.row-dragging{opacity:.6}
+
+/* Referencias */
+.refs-header{display:grid;grid-template-columns:36px 1fr 1.2fr 180px 36px;gap:10px;color:var(--muted);font-size:13px;margin:6px 0}
+.refs-list{display:flex;flex-direction:column;gap:8px}
+.ref-row{display:grid;grid-template-columns:36px 1fr 1.2fr 180px 36px;gap:10px;align-items:center;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+
+/* Equipo */
+.team-header{display:grid;grid-template-columns:36px 1.2fr 1fr 1.2fr 36px;gap:10px;color:var(--muted);font-size:13px;margin:6px 0}
+.team-list{display:flex;flex-direction:column;gap:8px}
+.team-row{display:grid;grid-template-columns:36px 1.2fr 1fr 1.2fr 36px;gap:10px;align-items:center;background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+
+/* Doc view */
+body.doc{background:#0a0e13}
+.doc-header{max-width:1100px;margin:20px auto 8px;padding:0 16px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.section{max-width:1100px;margin:0 auto 16px;padding:16px;border:1px solid var(--line);border-radius:10px;background:#0f141c}
+.kpi-list{display:flex;flex-wrap:wrap;gap:14px}
+.badge{background:#1c2a3d;border:1px solid #2b3b54;border-radius:999px;padding:3px 8px;font-size:12px}
+.refs-output{display:flex;flex-direction:column;gap:6px}
+
+/* Charts (50% height viewport) */
+.charts-50{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chart-card{background:#0f141c;border:1px solid var(--line);border-radius:10px;padding:8px}
+.chart-title{margin:0 0 6px;color:var(--muted)}
+.chart-box{position:relative;height:50vh;min-height:260px}
+.chart-canvas{width:100%;height:100%}
+
+/* Gantt simple */
+.gantt{display:flex;flex-direction:column;gap:6px}
+.gantt-bar{background:#193458;border:1px solid #274a78;border-radius:8px;padding:6px 10px;color:#aaccff}
+.footer{max-width:1100px;margin:12px auto 24px;padding:0 16px;color:var(--muted)}
+.muted{color:var(--muted)}
