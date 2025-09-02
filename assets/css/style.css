@@ -1,4 +1,4 @@
-/* style.css — v1.9.6 completo + Segoe UI + link-add dark */
+/* style.css — v2.1 (Segoe UI + dark + checkboxes en grid) */
 :root {
   --bg:#0b0f14; --bg-2:#0e141c; --card:#121821; --line:#1e2733;
   --text:#e6eef7; --muted:#9fb0c3; --accent:#4a90e2; --accent-2:#1f6fd6;
@@ -9,7 +9,7 @@ html,body{margin:0;height:100%}
 body{
   background:var(--bg);
   color:var(--text);
-  font:14px/1.6 'Segoe UI', sans-serif; /* 👈 Fuente global */
+  font:14px/1.6 'Segoe UI', sans-serif;
 }
 
 /* Layout */
@@ -39,10 +39,27 @@ input,textarea,select{
 textarea{resize:vertical}
 input:focus,textarea:focus,select:focus{border-color:var(--accent)}
 
-/* Chips (checkboxes) */
-.chips{display:flex;flex-wrap:wrap;gap:10px}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg-2);font-size:13px}
-.chip input{width:auto;height:auto;margin:0}
+/* Chips (checkboxes) — ahora en GRID */
+.chips{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0,1fr)); /* 5 columnas por defecto */
+  gap:12px;
+}
+@media (max-width:1200px){ .chips{grid-template-columns:repeat(4,1fr);} }
+@media (max-width:900px) { .chips{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:700px) { .chips{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:480px) { .chips{grid-template-columns:1fr;} }
+
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg-2);
+  font-size:13px;
+  width:100%;
+}
+.chip input{width:auto;height:auto;margin:0;}
 
 /* Tags input */
 .tags-input{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid var(--line);background:var(--bg-2);padding:8px 10px;border-radius:10px}
@@ -57,7 +74,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent)}
 .btn{background:#1b2940;color:#d6e6ff;border:1px solid #2a3a56;border-radius:10px;padding:8px 12px;cursor:pointer}
 .btn-secondary{background:#151f2e}
 
-/* NEW: botón agregar (link-add) oscuro */
+/* botón agregar (link-add) oscuro */
 .link-add{
   margin-top:10px;
   background:var(--bg-2);

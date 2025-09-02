@@ -1,5 +1,5 @@
 <?php
-// index.php — Generador de Test Plan (v1.9.6 + Segoe UI + link-add dark)
+// index.php — Generador de Test Plan (v2.1 basado en v2.0, con checkboxes en grid)
 
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $today = date('Y-m-d');
@@ -46,7 +46,7 @@ $TEST_TYPES = [
           </label>
           <label class="field">
             <span>Versión del plan</span>
-            <input name="plan_version" type="text" required placeholder="Ej: 1.9.6" />
+            <input name="plan_version" type="text" required placeholder="Ej: 2.1" />
           </label>
         </div>
       </section>
@@ -273,7 +273,7 @@ TC-003;Transferencia con saldo suficiente"></textarea>
   </main>
 
   <footer class="footer" role="contentinfo">
-    <small>v1.9.6 • Estructura completa + UI compacta, Segoe UI y botones link-add dark</small>
+    <small>v2.1 • Estructura completa + UI compacta, Segoe UI, link-add dark, checkboxes en columnas</small>
   </footer>
 </body>
 </html>

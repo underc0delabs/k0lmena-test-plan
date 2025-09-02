@@ -1,5 +1,5 @@
 <?php
-// generate_plan.php — Render del Test Plan (v1.9.6)
+// generate_plan.php — Render del Test Plan (v2.1)
 
 function normalize_lines(string $str): array {
   return array_values(array_filter(array_map('trim', preg_split('/\R/', $str))));
@@ -16,9 +16,7 @@ function table_simple(array $rows, array $headers): string {
   $ths = ''; foreach ($headers as $h) $ths .= '<th>'.htmlspecialchars($h).'</th>';
   $trs = '';
   foreach ($rows as $r) {
-    $trs .= '<tr>';
-    foreach ($r as $cell) $trs .= '<td>'.htmlspecialchars((string)$cell).'</td>';
-    $trs .= '</tr>';
+    $trs .= '<tr>'; foreach ($r as $cell) $trs .= '<td>'.htmlspecialchars((string)$cell).'</td>'; $trs .= '</tr>';
   }
   return "<table class='flat'><thead><tr>{$ths}</tr></thead><tbody>{$trs}</tbody></table>";
 }
@@ -42,7 +40,7 @@ $d = $_POST;
 
 $project   = htmlspecialchars($d['project_name'] ?? 'Proyecto');
 $date      = htmlspecialchars($d['date'] ?? '');
-$version   = htmlspecialchars($d['plan_version'] ?? '1.9.6');
+$version   = htmlspecialchars($d['plan_version'] ?? '2.1');
 
 $objective = $d['objective']    ?? '';
 $scope_raw = $d['scope']        ?? '';
@@ -254,7 +252,7 @@ foreach (normalize_lines($cases_raw) as $line) {
 
   <section class="section">
     <h2>Control de cambios</h2>
-    <?= table_simple([[ $version, $date, 'UI compacta + DnD estable + Segoe UI + link-add dark.']], ['Versión','Fecha','Descripción']); ?>
+    <?= table_simple([[ $version, date('Y-m-d'), 'Checkboxes en columnas (grid).']], ['Versión','Fecha','Descripción']); ?>
   </section>
 
   <script>

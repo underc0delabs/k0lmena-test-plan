@@ -1,37 +1,42 @@
-// app.js — v1.9.6 (DnD + tags + dinámicos + enter bloqueado en tags)
+// app.js — v2.1 (DnD estable + tags + dinámicos)
 document.addEventListener('DOMContentLoaded', () => {
 
+  // ---------- Helpers
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
-  const planForm = $('#planForm');
 
   function createNodeFromHTML(html){
     const wrap = document.createElement('div');
     wrap.innerHTML = html.trim();
     return wrap.firstElementChild;
-    }
+  }
 
-  // Evitar submit con Enter dentro del input de herramientas
+  // ---------- Prevent form submit on Enter inside tags input
+  const planForm = $('#planForm');
   planForm?.addEventListener('keydown', (e) => {
     if (e.target && e.target.id === 'toolsInput' && (e.key === 'Enter')) {
       e.preventDefault();
     }
   });
 
-  // Tags (Herramientas)
+  // ---------- Tags input (tools)
   (function initTags(){
-    const wrap = $('#toolsTags'); if (!wrap) return;
+    const wrap = $('#toolsTags');
+    if (!wrap) return;
     const input = $('#toolsInput');
-    const list  = $('#toolsWrap');
-    const name  = wrap.dataset.name || 'tools[]';
+    const list = $('#toolsWrap');
+    const name = wrap.dataset.name || 'tools[]';
 
     function addTag(text){
-      const val = text.trim(); if (!val) return;
+      const val = text.trim();
+      if (!val) return;
       const tag = document.createElement('span');
       tag.className = 'tag';
       tag.innerHTML = `<span>${val}</span><button type="button" class="tag-x" aria-label="Eliminar">✕</button>`;
       const hidden = document.createElement('input');
-      hidden.type = 'hidden'; hidden.name = name; hidden.value = val;
+      hidden.type = 'hidden';
+      hidden.name = name;
+      hidden.value = val;
       tag.appendChild(hidden);
       list.appendChild(tag);
       input.value = '';
@@ -46,18 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     list.addEventListener('click', (e) => {
       if (e.target.closest('.tag-x')) {
-        e.target.closest('.tag')?.remove();
+        const tag = e.target.closest('.tag');
+        tag?.remove();
       }
     });
   })();
 
-  // Util dinámicos + DnD
+  // ---------- Dynamic rows util
   function initDynamic(sectionId, templateId){
     const list = document.getElementById(sectionId);
     const tpl  = document.getElementById(templateId);
     if (!list || !tpl) return;
     let counter = 1;
 
+    // Add row buttons
     const addBtn = list.parentElement.querySelector('.link-add');
     addBtn?.addEventListener('click', () => {
       const html = tpl.innerHTML.replaceAll('$idx', String(counter++));
@@ -65,15 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
       list.appendChild(node);
     });
 
+    // Delete with minimum 1 row
     list.addEventListener('click', (e) => {
       if (e.target.classList.contains('btn-del') || e.target.closest('.btn-del')) {
         const row = e.target.closest('.ref-row, .team-row');
         const rows = list.querySelectorAll('.ref-row, .team-row');
-        if (rows.length <= 1) return; // mantener al menos 1
+        if (rows.length <= 1) return; // never 0
         row.remove();
       }
     });
 
+    // Drag & drop
     let dragged = null;
     list.addEventListener('dragstart', (e) => {
       const row = e.target.closest('.ref-row, .team-row');
@@ -82,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       row.classList.add('row-dragging');
       e.dataTransfer.effectAllowed = 'move';
     });
-    list.addEventListener('dragend', () => {
+    list.addEventListener('dragend', (e) => {
       if (dragged) dragged.classList.remove('row-dragging');
       dragged = null;
       $$('.row-drag-over').forEach(el => el.classList.remove('row-drag-over'));
@@ -97,10 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
       row.parentNode.insertBefore(dragged, before ? row : row.nextSibling);
     });
     list.addEventListener('dragleave', (e) => {
-      e.target.closest('.ref-row, .team-row')?.classList.remove('row-drag-over');
+      const row = e.target.closest('.ref-row, .team-row');
+      row?.classList.remove('row-drag-over');
     });
   }
 
+  // Initialize for references and team
   initDynamic('refsList', 'refTemplate');
   initDynamic('teamList', 'teamTemplate');
 });
